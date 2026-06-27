@@ -1,0 +1,12 @@
+rules:
+  - id: user-input-to-sql-sink
+    mode: taint
+    pattern-sources:
+      - pattern: req.body
+      - pattern: req.query
+      - pattern: req.params
+    pattern-sinks:
+      - pattern: $DB.query(...)
+    message: User input flows to a SQL sink without sanitization (CWE-89)
+    severity: ERROR
+    languages: [javascript, typescript]

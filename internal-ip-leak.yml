@@ -1,0 +1,12 @@
+rules:
+  - id: internal-ip-leak
+    patterns:
+      - pattern-regex: '\b(10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3})\b'
+    paths:
+      exclude:
+        - "*.md"
+        - "*.txt"
+        - "test/**"
+    message: Internal/private IP address found in code - may leak internal network info
+    severity: INFO
+    languages: [generic]

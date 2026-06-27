@@ -1,0 +1,11 @@
+rules:
+  - id: command-injection-exec
+    patterns:
+      - pattern-either:
+          - pattern: child_process.exec($CMD, ...)
+          - pattern: exec($CMD, ...)
+      - pattern-not: child_process.exec("...", ...)
+      - pattern-not: exec("...", ...)
+    message: exec() with a non-literal command - command injection risk (CWE-78)
+    severity: ERROR
+    languages: [javascript, typescript]

@@ -1,0 +1,15 @@
+rules:
+  - id: path-traversal-sendfile
+    patterns:
+      - pattern-either:
+          - pattern: res.sendFile($PATH, ...)
+          - pattern: res.sendFile($PATH)
+      - pattern-not: res.sendFile("...", ...)
+      - pattern-not: res.sendFile("...")
+      - pattern-not: res.sendFile(path.resolve("..."))      # add — hardcoded resolve
+      - pattern-not: res.sendFile(path.resolve("...", "...")) # add — hardcoded 2-arg
+
+
+    message: sendFile with a non-literal path - potential path traversal (CWE-22)
+    severity: ERROR
+    languages: [javascript, typescript]
